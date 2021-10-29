@@ -11,6 +11,9 @@ class Routes {
   static String register1="/register1";
   static String register2="/register2";
   static String register3="/register3";
+  static String otp_screen="/otpscreen";
+  static String success_signup="/success_signup";
+
   static void configureRoutes(FluroRouter router) {
     router.notFoundHandler = Handler(
         handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
@@ -22,5 +25,7 @@ class Routes {
     router.define(register1, handler: registrationOneHandler);
     router.define(register2, handler: registrationTwoHandler);
     router.define(register3, handler: registrationThreeHandler);
+    router.define(otp_screen, handler: otpHandler);
+    router.define(success_signup, handler: successSignupHandler);
   }
 }

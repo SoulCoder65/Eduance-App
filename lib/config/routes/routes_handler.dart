@@ -11,6 +11,11 @@ import '../../screens/authentication/login/login.dart';
 import '../../screens/authentication/signup/register_screen1.dart';
 import '../../screens/authentication/signup/register_screen2.dart';
 import '../../screens/authentication/signup/register_screen3.dart';
+//Otp Screen
+import '../../screens/authentication/signup/otp_verification.dart';
+import '../../screens/authentication/signup/success_screen.dart';
+
+
 // Root Handler
 var rootHandler=Handler(handlerFunc: (BuildContext? context,Map<String,List<String>> params){
   return SplashScreen();
@@ -31,4 +36,10 @@ var registrationTwoHandler=Handler(handlerFunc:(BuildContext? context,Map<String
 } );
 var registrationThreeHandler=Handler(handlerFunc:(BuildContext? context,Map<String,List<String>> params){
   return RegisterScreenThree();
+} );
+var otpHandler=Handler(handlerFunc:(BuildContext? context,Map<String,List<String>> params){
+  return OTPScreen();
+} );
+var successSignupHandler=Handler(handlerFunc:(BuildContext? context,Map<String,List<String>> params){
+  return SuccessSignup();
 } );

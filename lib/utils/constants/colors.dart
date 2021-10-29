@@ -10,4 +10,5 @@ class ColorPallete{
   final secondaryText=Color.fromRGBO(159, 162, 165, 1);
   final successColor=Colors.green;
   final textFieldColor=Colors.grey[200];
+  final errorColor=Colors.red;
 }

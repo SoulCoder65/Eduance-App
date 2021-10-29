@@ -5,7 +5,7 @@ import 'splash_title.dart';
 import '../../widgets/comman/spinner.dart';
 //Helpers
 import '../../utils/constants/colors.dart';
-
+import 'navigate_function.dart';
 
 class SplashScreen extends StatefulWidget {
   static const routeName = "/splashScreen";
@@ -18,6 +18,11 @@ class _SplashScreenState extends State<SplashScreen> {
   late double screenHeight;
   final colorpallete = ColorPallete();
 
+  @override
+  void initState() {
+    navigateFun(context);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     screenWidth = MediaQuery.of(context).size.width;

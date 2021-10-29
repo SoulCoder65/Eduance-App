@@ -2,16 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/scheduler.dart';
-
+import 'package:provider/provider.dart';
 //Widgets
-import '../../../widgets/signup/steps.dart';
-import '../../../widgets/signup/subtitle.dart';
-import '../../../widgets/signup/titletext.dart';
+import '../../../widgets/auth/steps.dart';
+import '../../../widgets/auth/subtitle.dart';
+import '../../../widgets/auth/titletext.dart';
 import '../../../widgets/comman/backbtn.dart';
 import '../../../widgets/comman/submitbtn.dart';
 //Helpers
 import '../../../utils/constants/colors.dart';
 import '../../../utils/helpers/validateemail.dart';
+import '../../../widgets/auth/loaderwidget.dart';
+//Services
+import '../../../utils/state management/students/authentication.dart';
 class RegisterScreenOne extends StatefulWidget {
 
   @override
@@ -21,14 +24,11 @@ class RegisterScreenOne extends StatefulWidget {
 class _RegisterScreenOneState extends State<RegisterScreenOne> {
   var screenWidth;
   var screenHeight;
-  bool showIcon = false;
-  bool enableBtn = false;
   bool keyboardIsOpen=false;
 
   final String text =
       "Enter your email address to continue. We will\nsend you an OTP for verification.";
   GlobalKey<FormState> _emailFormKey = GlobalKey<FormState>();
-  TextEditingController _emailval = TextEditingController();
   final colorpallete=ColorPallete();
 
 
@@ -36,25 +36,10 @@ class _RegisterScreenOneState extends State<RegisterScreenOne> {
   //Form Submit
   void submitEmailFun()
   {
-    print("Hello");
     if (_emailFormKey.currentState!.validate()) {
-       Navigator.pushNamed(context, '/userlogin');
-    }
+      Provider.of<StudentAuth>(context,listen: false).verifyEmailOtp(context,false);
+      }
 
-  }
-  void correctEmail() {
-    setState(() {
-      showIcon = true;
-      enableBtn = true;
-    });
-  }
-
-  void incorrectEmail() {
-    setState(() {
-      showIcon = false;
-      enableBtn = false;
-
-    });
   }
 
   @override
@@ -70,7 +55,7 @@ class _RegisterScreenOneState extends State<RegisterScreenOne> {
             Container(
               width: screenWidth,
               height: screenHeight,
-              color: Colors.black,
+              color: colorpallete.bgColor,
             ),
             Container(
                 width: screenWidth,
@@ -98,10 +83,12 @@ class _RegisterScreenOneState extends State<RegisterScreenOne> {
                 )
             ),
             !keyboardIsOpen? Positioned(
-                bottom: 0,
+                bottom:20,
                 left: 20,
                 child:submitBtn(context, screenWidth,"Continue",submitEmailFun)
             ):SizedBox(),
+            loaderWidgetAuth(context,screenWidth,screenHeight),
+
           ],)
       ),
     );
@@ -116,55 +103,59 @@ class _RegisterScreenOneState extends State<RegisterScreenOne> {
       child: Container(
         width: screenWidth * 0.9,
         padding: EdgeInsets.only(top: screenHeight * 0.07),
-        child: TextFormField(
-            textInputAction: TextInputAction.next,
-            onFieldSubmitted: (value) {
-              submitEmailFun();
-            },
-            controller: _emailval,
-            validator: (value) {
-              if (value!.isEmpty) {
-                SchedulerBinding.instance!.addPostFrameCallback((duration) {
-                   incorrectEmail();
-                });
-                return "Please enter the Email";
-              } else if (!emailValidate(value)) {
-                SchedulerBinding.instance!.addPostFrameCallback((duration) {
-                   incorrectEmail();
-                });
+        child: Consumer<StudentAuth>(builder: (context, value, child) {
+          return TextFormField(
+              textInputAction: TextInputAction.next,
+              onFieldSubmitted: (email) {
+                value.student_email=email;
+                FocusManager.instance.primaryFocus!.unfocus();
 
-                return "Please enter correct Email";
-              } else {
-                SchedulerBinding.instance!.addPostFrameCallback((duration) {
-                  correctEmail();
-                });
-                return null;
-              }
-            },
-            style: GoogleFonts.montserrat(color: colorpallete.primaryText),
-            cursorColor: colorpallete.primaryText,
-            decoration: new InputDecoration(
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color:colorpallete.borderColor, width: 1.0),
-                ),
-                filled: true,
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: colorpallete.inactiveBorder, width: 1.0),
-                ),
-                fillColor: Color(0xFF121516),
-                suffixIcon: showIcon
-                    ? Icon(Feather.check_circle, color: Colors.green)
-                    : null,
-                hintText: 'Email',
-                hintStyle: GoogleFonts.montserrat(
-                    color: Color(0xFF9FA2A5), fontSize: 12),
-                errorBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color:showIcon?colorpallete.successColor:colorpallete.inactiveBorder, width: 1.0),
-                ),
-                focusedErrorBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color:showIcon?colorpallete.successColor: colorpallete.borderColor, width: 1.0),
-                ),
-                errorText: "")),
+                submitEmailFun();
+              },
+              validator: (val) {
+                if (val!.isEmpty) {
+                  SchedulerBinding.instance!.addPostFrameCallback((duration) {
+                   value.incorrectCredentials(1);
+                  });
+                  return "Please enter the Email";
+                } else if (!emailValidate(val)) {
+                  SchedulerBinding.instance!.addPostFrameCallback((duration) {
+                    value.incorrectCredentials(1);
+                  });
+
+                  return "Please enter correct Email";
+                } else {
+                  SchedulerBinding.instance!.addPostFrameCallback((duration) {
+                    value.correctCredentials(1);
+                  });
+                  return null;
+                }
+              },
+              style: GoogleFonts.montserrat(color: colorpallete.primaryText),
+              cursorColor: colorpallete.primaryText,
+              decoration: new InputDecoration(
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color:colorpallete.borderColor, width: 1.0),
+                  ),
+                  filled: true,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: colorpallete.inactiveBorder, width: 1.0),
+                  ),
+                  fillColor: Color(0xFF121516),
+                  suffixIcon: value.showIconStep1
+                      ? Icon(Feather.check_circle, color: Colors.green)
+                      : null,
+                  hintText: 'Email',
+                  hintStyle: GoogleFonts.montserrat(
+                      color: Color(0xFF9FA2A5), fontSize: 12),
+                  errorBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color:value.showIconStep1?colorpallete.successColor:colorpallete.inactiveBorder, width: 1.0),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color:value.showIconStep1?colorpallete.successColor: colorpallete.borderColor, width: 1.0),
+                  ),
+                  errorText: ""));
+        },),
       ),
     );
   }

@@ -13,7 +13,7 @@ Widget stepsWidget(BuildContext context,double screenWidth,String stepnum)
         Text("STEP $stepnum  ",style: GoogleFonts.montserrat(
           color: colorpallete.primaryText,fontWeight: FontWeight.bold
         ),),
-        Text(" /   03",style: GoogleFonts.montserrat(
+        Text(" /   04",style: GoogleFonts.montserrat(
             color: colorpallete.primaryText
         ),)
       ],
