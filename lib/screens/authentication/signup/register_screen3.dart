@@ -5,7 +5,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 //Widgets
 import '../../../widgets/auth/steps.dart';
@@ -15,6 +14,7 @@ import '../../../widgets/comman/submitbtn.dart';
 //Helpers
 import '../../../utils/constants/colors.dart';
 import '../../../widgets/auth/loaderwidget.dart';
+import '../../../utils/helpers/select_date.dart';
 //Services
 import '../../../utils/state management/students/authentication.dart';
 
@@ -46,23 +46,6 @@ class _RegisterScreenThreeState extends State<RegisterScreenThree> {
     }
   }
 
-  _selectDate(BuildContext context, StudentAuth studentAuth) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime(DateTime.now().year, DateTime.now().month,
-          DateTime.now().day), // Refer step 1
-      firstDate: DateTime(1920),
-      lastDate: DateTime(DateTime.now().year + 1),
-    );
-    if (picked != null) {
-      studentAuth.student_dob_controller
-        ..text = DateFormat('MMMM dd,yyyy').format(picked)
-        ..selection = TextSelection.fromPosition(TextPosition(
-            offset: studentAuth.student_dob_controller.text.length,
-            affinity: TextAffinity.upstream));
-      // studentAuth.student_dob = DateFormat('MMMM dd,yyyy').format(picked);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -204,7 +187,7 @@ class _RegisterScreenThreeState extends State<RegisterScreenThree> {
         width: screenWidth * 0.9,
         child: GestureDetector(
           onTap: () {
-            _selectDate(context, studentAuth);
+            selectDate(context, studentAuth);
           },
           child: Container(
             padding: EdgeInsets.only(top: 10),

@@ -15,6 +15,14 @@ import '../../screens/authentication/signup/register_screen3.dart';
 import '../../screens/authentication/signup/otp_verification.dart';
 import '../../screens/authentication/signup/success_screen.dart';
 
+//DashBoard
+import '../../screens/dashboard/dashboard.dart';
+
+//Profile Section
+import '../../screens/profile section/profile/profile.dart';
+import '../../screens/profile section/edit profile/edit_profile.dart';
+import '../../screens/profile section/password/change_password.dart';
+import '../../screens/profile section/contact/contactinfo.dart';
 
 // Root Handler
 var rootHandler=Handler(handlerFunc: (BuildContext? context,Map<String,List<String>> params){
@@ -42,4 +50,22 @@ var otpHandler=Handler(handlerFunc:(BuildContext? context,Map<String,List<String
 } );
 var successSignupHandler=Handler(handlerFunc:(BuildContext? context,Map<String,List<String>> params){
   return SuccessSignup();
+} );
+
+//Dash board
+var dashboardHandler=Handler(handlerFunc:(BuildContext? context,Map<String,List<String>> params){
+  return StudentDashBoard();
+} );
+//Profile Section
+var profileHandler=Handler(handlerFunc:(BuildContext? context,Map<String,List<String>> params){
+  return ProfileSection();
+} );
+var profileEditHandler=Handler(handlerFunc:(BuildContext? context,Map<String,List<String>> params){
+  return EditProfile();
+} );
+var changePasswordHandler=Handler(handlerFunc:(BuildContext? context,Map<String,List<String>> params){
+  return ChangePassword();
+} );
+var contactInformationHandler=Handler(handlerFunc:(BuildContext? context,Map<String,List<String>> params){
+  return ContactInfo();
 } );

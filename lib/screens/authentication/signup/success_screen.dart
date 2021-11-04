@@ -40,7 +40,7 @@ class _SuccessSignupState extends State<SuccessSignup> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Lottie.asset("assets/images/comman/success_tick.json",
+                  Lottie.asset("assets/animation/success_tick.json",
                       repeat: false),
                   SizedBox(
                     height: screenHeight! * 0.07,

@@ -18,6 +18,7 @@ class StudentAuth with ChangeNotifier {
   String? student_email;
   String? student_phone;
   String? student_pass;
+  String? student_new_pass;
   String? student_gender = "Male";
   // String? student_dob;
   String? student_fname;

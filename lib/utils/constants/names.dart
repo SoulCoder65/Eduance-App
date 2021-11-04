@@ -1,3 +1,3 @@
 
 // final splashappName="DUANCE";
-// final appName="EDUANCE";
+final appName="EDUANCE";

@@ -10,7 +10,7 @@ Widget submitBtn(BuildContext context, double screenWidth,String text,Function a
   return Align(
     alignment: Alignment.topLeft,
     child: Container(
-      color: Colors.black,
+      color: colorpallete.bgColor,
       padding: const EdgeInsets.only(top: 12.0,bottom: 10),
       child: SizedBox(
         width: screenWidth * 0.9,

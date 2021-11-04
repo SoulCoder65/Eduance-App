@@ -8,7 +8,6 @@ import '../../utils/constants/colors.dart';
 import 'navigate_function.dart';
 
 class SplashScreen extends StatefulWidget {
-  static const routeName = "/splashScreen";
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -37,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Lottie.asset("assets/images/comman/lottie-intro.json"),
+            Lottie.asset("assets/animation/lottie-intro.json"),
             SizedBox(
               height: 20,
             ),

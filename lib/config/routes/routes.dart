@@ -5,6 +5,8 @@ import 'package:fluro/fluro.dart';
 import 'routes_handler.dart';
 
 class Routes {
+
+  static TransitionType _transitionType=TransitionType.material;
   //Names
   static String root = "/splashscreen";
   static String userlogin = "/userlogin";
@@ -13,6 +15,13 @@ class Routes {
   static String register3="/register3";
   static String otp_screen="/otpscreen";
   static String success_signup="/success_signup";
+  static String dash_board="/student_dashboard";
+  static String profile="/profile";
+  static String editprofile="/edit_profile";
+  static String changepassword="/change_password";
+  static String contactinfo="/contact_info";
+
+
 
   static void configureRoutes(FluroRouter router) {
     router.notFoundHandler = Handler(
@@ -21,11 +30,16 @@ class Routes {
       return;
     });
     router.define(root,handler: rootHandler);
-    router.define(userlogin, handler: userloginHandler);
-    router.define(register1, handler: registrationOneHandler);
-    router.define(register2, handler: registrationTwoHandler);
-    router.define(register3, handler: registrationThreeHandler);
-    router.define(otp_screen, handler: otpHandler);
-    router.define(success_signup, handler: successSignupHandler);
+    router.define(userlogin, handler: userloginHandler,transitionType: _transitionType);
+    router.define(register1, handler: registrationOneHandler,transitionType: _transitionType);
+    router.define(register2, handler: registrationTwoHandler,transitionType: _transitionType);
+    router.define(register3, handler: registrationThreeHandler,transitionType: _transitionType);
+    router.define(otp_screen, handler: otpHandler,transitionType: _transitionType);
+    router.define(success_signup, handler: successSignupHandler,transitionType: _transitionType);
+    router.define(dash_board, handler: dashboardHandler,transitionType: _transitionType);
+    router.define(profile, handler: profileHandler,transitionType: _transitionType);
+    router.define(editprofile, handler: profileEditHandler,transitionType: _transitionType);
+    router.define(changepassword, handler: changePasswordHandler,transitionType: _transitionType);
+    router.define(contactinfo, handler: contactInformationHandler,transitionType: _transitionType);
   }
 }
