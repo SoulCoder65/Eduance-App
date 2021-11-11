@@ -46,7 +46,7 @@ class _OTPScreenState extends State<OTPScreen> {
         .verifyEmailOtp(context, true);
   }
 
-  void verifyOTP() async {
+  void verifyOTP(BuildContext context) async {
     print(_otpController.text);
     if (_otpController.text !=
         Provider.of<StudentAuth>(context, listen: false).otp_check) {

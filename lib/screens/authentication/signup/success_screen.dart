@@ -16,9 +16,9 @@ class _SuccessSignupState extends State<SuccessSignup> {
   var screenHeight;
   final colorpallete = ColorPallete();
 
-  void redirectToLogin()
+  void redirectToLogin(BuildContext context)
   {
-
+Navigator.pushNamedAndRemoveUntil(context, "/userlogin", (route) => false);
   }
   @override
   Widget build(BuildContext context) {

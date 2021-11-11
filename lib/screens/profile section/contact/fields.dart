@@ -8,7 +8,7 @@ Widget contactfield(BuildContext context, double screenWidth,StudentAuth student
   return Container(
     width: screenWidth * 0.9,
     child: TextFormField(
-        initialValue:isEmail?studentAuth.student_email:studentAuth.student_phone,
+        initialValue:isEmail?studentAuth.studentData!.data.email:studentAuth.studentData!.data.phone,
 
         style: GoogleFonts.montserrat(color: colorpallete.primaryText),
         cursorColor: colorpallete.primaryText,

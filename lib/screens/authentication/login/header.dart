@@ -10,7 +10,7 @@ Widget headerWidget(double screenWidth)
           width: 19.0,
           height: 25.0,
           color: Color.fromRGBO(130, 205, 255, 1.0),
-          image: AssetImage('assets/images/comman/logo.png'),
+          image: AssetImage('assets/icons/logo.png'),
         ),
       ),
       SizedBox(width: screenWidth * 0.02),

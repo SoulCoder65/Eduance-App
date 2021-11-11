@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 //Helpers
 import '../../utils/constants/colors.dart';
+import '../../widgets/profile/profileimg.dart';
 
 final colorpallete = ColorPallete();
 PreferredSizeWidget appBarWidget(BuildContext context, GlobalKey<ScaffoldState> key,String title) {
@@ -54,12 +55,7 @@ PreferredSizeWidget appBarWidget(BuildContext context, GlobalKey<ScaffoldState> 
         },
         child: Padding(
           padding: const EdgeInsets.only(right: 20),
-          child: CircleAvatar(
-            radius: 20.0,
-            backgroundImage:
-            NetworkImage('https://picsum.photos/id/1005/200/300'),
-            backgroundColor: Colors.transparent,
-          ),
+          child: profileImgWidget(context,40,40)
         ),
       )
     ],

@@ -10,7 +10,7 @@ class DioExceptions implements Exception {
         message = "Connection timeout with API server";
         break;
       case DioErrorType.other:
-        message = "Connection to API server failed due to internet connection";
+        message = "Please check your internet connection or try again later!";
         break;
       case DioErrorType.receiveTimeout:
         message = "Receive timeout in connection with API server";
@@ -34,7 +34,7 @@ class DioExceptions implements Exception {
     switch (statusCode) {
       case 400:
         return 'Bad request';
-      case 404:
+      case 401:
         return error["message"];
       case 409:
         return error['message'];

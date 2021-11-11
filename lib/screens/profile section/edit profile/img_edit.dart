@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../utils/constants/colors.dart';
-
+import '../../../widgets/profile/imagepicker.dart';
+import '../../../widgets/profile/profileimg.dart';
 final colorpallete=ColorPallete();
 Widget profileImgEdit(BuildContext context, double screenWidth) {
   return Padding(
@@ -9,16 +10,8 @@ Widget profileImgEdit(BuildContext context, double screenWidth) {
       new Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[Container(
-        width: 150.0,
-        height: 100.0,
-        decoration: new BoxDecoration(
-          shape: BoxShape.circle,
-          image: new DecorationImage(
-            image: NetworkImage('https://picsum.photos/id/1005/200/300'),
-            fit: BoxFit.cover,
-          ),
-        ))],
+        children: <Widget>[
+          profileImgWidget(context,105,105)        ],
       ),
       Padding(
           padding: EdgeInsets.only(top: 60.0, left: 90.0),
@@ -35,6 +28,7 @@ Widget profileImgEdit(BuildContext context, double screenWidth) {
                   ),
                 ),
                 onTap: () {
+                  showPicker(context);
                   // showPicker(context, _imgFromCamera, _imgFromGallery);
                 },
               )

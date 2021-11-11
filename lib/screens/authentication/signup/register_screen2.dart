@@ -10,7 +10,7 @@ import '../../../widgets/comman/backbtn.dart';
 import '../../../widgets/comman/submitbtn.dart';
 //Helpers
 import '../../../utils/constants/colors.dart';
-import '../../../utils/helpers/validatephone.dart';
+import '../../../utils/helpers/validators/validatephone.dart';
 
 //Services
 import '../../../utils/state management/students/authentication.dart';
@@ -33,7 +33,7 @@ class _RegisterScreenTwoState extends State<RegisterScreenTwo> {
   final colorpallete = ColorPallete();
   bool keyboardIsOpen = false;
 
-  void submitPasswordFun() {
+  void submitPasswordFun(BuildContext context) {
     if (_formKey.currentState!.validate()) {
       Navigator.pushNamed(context, '/register3');
     }

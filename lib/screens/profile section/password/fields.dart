@@ -15,7 +15,7 @@ Widget passwordField(BuildContext context,double screenWidth, StudentAuth studen
         },
         validator: (value) {
           if (value!.isEmpty) {
-            return "Please enter the Password";
+            return isNew?"Please enter the new password":"Please enter the password";
           } else if (value.length < 8) {
             return "Password length must be atleast 8 characters long";
           } else {
@@ -46,9 +46,9 @@ Widget passwordField(BuildContext context,double screenWidth, StudentAuth studen
                 color: Color(0xFF9FA2A5), fontSize: 12),
             errorBorder: OutlineInputBorder(
               borderSide: BorderSide(
-                  color: studentAuth.showIconStep2
+                  color:isNew? (studentAuth.showIconStep2
                       ? colorpallete.successColor
-                      : colorpallete.inactiveBorder,
+                      : colorpallete.inactiveBorder):colorpallete.inactiveBorder,
                   width: 1.0),
             ),
             focusedErrorBorder: OutlineInputBorder(

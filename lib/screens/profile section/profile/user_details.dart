@@ -2,7 +2,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import '../../../utils/constants/colors.dart';
+import '../../../utils/constants/colors.dart';
+import '../../../utils/state management/students/authentication.dart';
+import '../../../utils/helpers/others/checknulltext.dart';
+
 
 final colorpallete = ColorPallete();
 Widget userDetails(BuildContext context, double screenWidth) {
@@ -33,67 +38,73 @@ Widget userDetails(BuildContext context, double screenWidth) {
 Widget _birthGenderWidget(double screenWidth) {
   return Container(
     width: screenWidth,
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Container(
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: colorpallete.fieldColor,
-          ),
-          width: screenWidth * 0.5,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AutoSizeText(
-                "Birthdate",
-                style: GoogleFonts.montserrat(
-                    color: colorpallete.widgetTextColor,
-                    fontWeight: FontWeight.w500),
+    child: Consumer<StudentAuth>(
+      builder: (context, value, child) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: colorpallete.fieldColor,
               ),
-              SizedBox(
-                height: 15,
+              width: screenWidth * 0.5,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AutoSizeText(
+                    "Birthdate",
+                    style: GoogleFonts.montserrat(
+                        color: colorpallete.widgetTextColor,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  AutoSizeText(
+                    checkNull(value.studentData!.data.dob),
+                    style: GoogleFonts.montserrat(
+                        color: colorpallete.primaryText,
+                        fontWeight: FontWeight.w500),
+                  ),
+
+                ],
               ),
-              AutoSizeText(
-                "30 November, 1999",
-                style: GoogleFonts.montserrat(
-                    color: colorpallete.primaryText,
-                    fontWeight: FontWeight.w500),
-              )
-            ],
-          ),
-        ),
-        Container(
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: colorpallete.fieldColor,
-          ),
-          width: screenWidth * 0.3,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AutoSizeText(
-                "Gender",
-                style: GoogleFonts.montserrat(
-                    color: colorpallete.widgetTextColor,
-                    fontWeight: FontWeight.w500),
+            ),
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: colorpallete.fieldColor,
               ),
-              SizedBox(
-                height: 15,
+              width: screenWidth * 0.3,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AutoSizeText(
+                    "Gender",
+                    style: GoogleFonts.montserrat(
+                        color: colorpallete.widgetTextColor,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  AutoSizeText(
+                    checkNull(value.studentData!.data.gender),
+
+                    style: GoogleFonts.montserrat(
+                        color: colorpallete.primaryText,
+                        fontWeight: FontWeight.w500),
+                  )
+                ],
               ),
-              AutoSizeText(
-                "Male",
-                style: GoogleFonts.montserrat(
-                    color: colorpallete.primaryText,
-                    fontWeight: FontWeight.w500),
-              )
-            ],
-          ),
-        )
-      ],
-    ),
+            )
+          ],
+        );
+      },
+    )
   );
 }
 

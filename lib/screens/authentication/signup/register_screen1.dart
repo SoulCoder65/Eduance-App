@@ -11,7 +11,7 @@ import '../../../widgets/comman/backbtn.dart';
 import '../../../widgets/comman/submitbtn.dart';
 //Helpers
 import '../../../utils/constants/colors.dart';
-import '../../../utils/helpers/validateemail.dart';
+import '../../../utils/helpers/validators/validateemail.dart';
 import '../../../widgets/auth/loaderwidget.dart';
 //Services
 import '../../../utils/state management/students/authentication.dart';
@@ -34,7 +34,7 @@ class _RegisterScreenOneState extends State<RegisterScreenOne> {
 
   //Methods
   //Form Submit
-  void submitEmailFun()
+  void submitEmailFun(BuildContext context)
   {
     if (_emailFormKey.currentState!.validate()) {
       Provider.of<StudentAuth>(context,listen: false).verifyEmailOtp(context,false);
@@ -110,7 +110,7 @@ class _RegisterScreenOneState extends State<RegisterScreenOne> {
                 value.student_email=email;
                 FocusManager.instance.primaryFocus!.unfocus();
 
-                submitEmailFun();
+                submitEmailFun(context);
               },
               validator: (val) {
                 if (val!.isEmpty) {

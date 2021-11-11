@@ -12,7 +12,7 @@ Widget progresssSpinner(double width, double height, bool showText) {
       child: Container(
         width: width,
         height: height,
-        color: colorpallete.bgColor.withOpacity(0.3),
+        color: colorpallete.bgColor.withOpacity(0.7),
         child: Center(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

@@ -1,11 +1,15 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
-
+import 'package:image_picker/image_picker.dart';
+//Model
+import '../../../models/student models/student_data.dart';
 //Service
-import '../../services/students/authenctication.dart';
+import '../../services/dio/students/authenctication.dart';
 //Helpers
-import '../../helpers/snackbar.dart';
+import '../../helpers/widget_functions/snackbar.dart';
+import '../../helpers/others/save_and_check_login.dart';
 
 class StudentAuth with ChangeNotifier {
 //  Objects
@@ -34,6 +38,8 @@ class StudentAuth with ChangeNotifier {
   String errorMessage = '';
   Color errorMessageColor = Colors.black;
 
+  StudentData? studentData;
+  PickedFile? pickedFile;
   void updateStudentAuthState() async {
     notifyListeners();
   }
@@ -144,21 +150,127 @@ class StudentAuth with ChangeNotifier {
               student_gender,
               student_dob_controller.text)
           .then((std) => {
-      updateStudentAuthLoaderState(false),
-
-          if(std!=null)
-              {
-                if(std.statusCode==201)
+                updateStudentAuthLoaderState(false),
+                if (std != null)
                   {
-                    Navigator.pushNamedAndRemoveUntil(context, "/success_signup", (route) => false)
+                    if (std.statusCode == 201)
+                      {
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, "/success_signup", (route) => false)
+                      }
                   }
-              }
-
-      });
+              });
     } catch (e) {
       updateStudentAuthLoaderState(false);
 
       print(e);
     }
+  }
+
+//  Login Student
+  Future<void> signinStudent(BuildContext context) async {
+    try {
+      updateStudentAuthLoaderState(true);
+      StudentAuthDio()
+          .signin_student(context, student_email, student_pass)
+          .then((std) async => {
+                updateStudentAuthLoaderState(false),
+                if (std != null)
+                  {
+                    if (std.statusCode == 202)
+                      {
+                        studentData =
+                            StudentData.fromJson(jsonDecode(std.toString())),
+                        save_login_data(studentData!.data.sId),
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, "/student_dashboard", (route) => false)
+                      }
+                  }
+              });
+    } catch (e) {
+      print("Err $e");
+      updateStudentAuthLoaderState(false);
+    }
+  }
+
+//  Check Student Already Login
+  Future<void> fetchStudent(BuildContext context, String? id) async {
+    try {
+      updateStudentAuthLoaderState(true);
+      StudentAuthDio().fetch_profile_student(context, id).then((std) async => {
+            updateStudentAuthLoaderState(false),
+            if (std != null)
+              {
+                if (std.statusCode == 200)
+                  {
+                    studentData =
+                        StudentData.fromJson(jsonDecode(std.toString())),
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, "/student_dashboard", (route) => false)
+                  }
+              }
+          });
+    } catch (e) {
+      print("Err $e");
+      updateStudentAuthLoaderState(false);
+    }
+  }
+
+  //  Update Profile
+  Future<void> updateProfile(
+    BuildContext context,
+  ) async {
+    try {
+      updateStudentAuthLoaderState(true);
+      StudentAuthDio()
+          .update_user_profile(
+              context,
+              studentData!.data.sId,
+              studentData!.data.fname,
+              studentData!.data.lname,
+              studentData!.data.dob,
+              studentData!.data.gender,
+              studentData!.data.profileurl)
+          .then((std) async => {
+                updateStudentAuthLoaderState(false),
+                if (std != null)
+                  {
+                    if (std.statusCode == 200)
+                      {
+                        studentData =
+                            StudentData.fromJson(jsonDecode(std.toString())),
+                        }
+                  }
+              });
+    } catch (e) {
+      print("Err $e");
+      updateStudentAuthLoaderState(false);
+    }
+  }
+
+
+  //  Update Password
+  Future<void> updatePassword(
+      BuildContext context,
+      ) async {
+    try {
+      updateStudentAuthLoaderState(true);
+      StudentAuthDio()
+          .update_user_password(context, studentData!.data.sId, student_pass, student_new_pass)
+          .then((std) async => {
+        updateStudentAuthLoaderState(false),
+        if (std != null)
+          {
+            if (std.statusCode == 200)
+              {
+                showSnack(context, "Password update successfully"),
+
+                }
+          }
+      });
+    } catch (e) {
+      updateStudentAuthLoaderState(false);
+    }
+
   }
 }

@@ -1,4 +1,5 @@
 // @dart=2.9
+import 'package:firebase_core/firebase_core.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,6 +19,8 @@ import 'utils/constants/colors.dart';
 
 void main()async {
   await WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 

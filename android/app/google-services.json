@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "215355355249",
+    "project_id": "eduance-3bbb4",
+    "storage_bucket": "eduance-3bbb4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:215355355249:android:dd8a901a03995136f16bd0",
+        "android_client_info": {
+          "package_name": "com.major.eduance"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "215355355249-gls8ljd0of5am8s3p82rcicoiog372cb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPljU4RWevlArllHEPGez-RaZMdzMPrlo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "215355355249-gls8ljd0of5am8s3p82rcicoiog372cb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

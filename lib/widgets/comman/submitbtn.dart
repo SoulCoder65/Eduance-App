@@ -26,7 +26,7 @@ Widget submitBtn(BuildContext context, double screenWidth,String text,Function a
             ),
           ),
           onPressed: () async {
-           actionFunction();
+           actionFunction(context);
           },
           style: ElevatedButton.styleFrom(
             elevation: 2,

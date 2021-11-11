@@ -14,7 +14,7 @@ import '../../../widgets/comman/submitbtn.dart';
 //Helpers
 import '../../../utils/constants/colors.dart';
 import '../../../widgets/auth/loaderwidget.dart';
-import '../../../utils/helpers/select_date.dart';
+import '../../../utils/helpers/widget_functions/select_date.dart';
 //Services
 import '../../../utils/state management/students/authentication.dart';
 
@@ -40,7 +40,7 @@ class _RegisterScreenThreeState extends State<RegisterScreenThree> {
 
   bool keyboardIsOpen = false;
 
-  void registerUser() {
+  void registerUser(BuildContext context) {
     if (_formKey.currentState!.validate()) {
        Provider.of<StudentAuth>(context, listen: false).signupStudent(context);
     }

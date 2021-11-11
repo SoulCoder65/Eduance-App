@@ -5,8 +5,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 //Helpers
 import '../../../utils/constants/colors.dart';
-import '../../../utils/helpers/select_date.dart';
+import '../../../utils/helpers/widget_functions/select_date.dart';
 import '../../../utils/state management/students/authentication.dart';
+import '../../../utils/helpers/others/checknulltext.dart';
 final colorpallete=ColorPallete();
 
 
@@ -50,10 +51,10 @@ Widget _fnameField(BuildContext context, double screenWidth,StudentAuth studentA
   return Container(
     width: screenWidth * 0.9,
     child: TextFormField(
-      initialValue: studentAuth.student_fname,
+      initialValue: checkNull(studentAuth.studentData!.data.fname),
         onChanged: (value) {
-          studentAuth.student_fname = value;
-        },
+          studentAuth.studentData!.data.fname = value;
+          },
         validator: (value) {
           if (value!.isEmpty) {
             return "Please enter the First name";
@@ -92,8 +93,9 @@ Widget _lnameField(BuildContext context, double screenWidth,StudentAuth studentA
   return Container(
     width: screenWidth * 0.9,
     child: TextFormField(
+      initialValue: checkNull(studentAuth.studentData!.data.lname),
         onChanged: (value) {
-          studentAuth.student_lname = value;
+          studentAuth.studentData!.data.lname = value;
         },
         validator: (value) {
           if (value!.isEmpty) {
@@ -129,6 +131,7 @@ Widget _lnameField(BuildContext context, double screenWidth,StudentAuth studentA
 //<-----------------Last NameWidget ENd------------------------>
 //<-----------------Date Input Widget ------------------------>
 Widget _dateField(BuildContext context,double screenWidth, StudentAuth studentAuth) {
+  // print(studentAuth.student_dob_controller.text);
   return Container(
     width: screenWidth * 0.9,
     child: GestureDetector(
@@ -139,6 +142,7 @@ Widget _dateField(BuildContext context,double screenWidth, StudentAuth studentAu
         // padding: EdgeInsets.only(top: 10),
         child: AbsorbPointer(
           child: TextFormField(
+
               controller: studentAuth.student_dob_controller,
               validator: (value) {
                 if (value!.isEmpty) {
@@ -187,6 +191,16 @@ Widget _dateField(BuildContext context,double screenWidth, StudentAuth studentAu
 //<-----------------Date Widget ENd------------------------>
 //<-----------------Gender Field---------------------->
 Widget _genderWidget(BuildContext context,double screenWidth, StudentAuth studentAuth) {
+    if(studentAuth.studentData!.data.gender=="Male")
+      {
+        studentAuth.isMale = true;
+
+      }
+    else{
+      studentAuth.isMale = false;
+
+    }
+
   return Container(
     width: screenWidth * 0.9,
     // padding: const EdgeInsets.all(10),
@@ -195,9 +209,12 @@ Widget _genderWidget(BuildContext context,double screenWidth, StudentAuth studen
       children: [
         GestureDetector(
           onTap: () {
-            studentAuth.student_gender = "Male";
+
             studentAuth.isMale = true;
-          },
+            studentAuth.updateStudentAuthState();
+
+            studentAuth.studentData!.data.gender="Male";
+            },
           child: Container(
             padding: const EdgeInsets.all(15),
             width: screenWidth * 0.4,
@@ -230,8 +247,9 @@ Widget _genderWidget(BuildContext context,double screenWidth, StudentAuth studen
         ),
         GestureDetector(
           onTap: () {
-            studentAuth.student_gender = "Female";
             studentAuth.isMale = false;
+            studentAuth.updateStudentAuthState();
+            studentAuth.studentData!.data.gender="Female";
           },
           child: Container(
             padding: const EdgeInsets.all(15),

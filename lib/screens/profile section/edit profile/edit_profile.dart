@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 //Helpers
 import '../../../utils/constants/colors.dart';
+import '../../../utils/state management/students/authentication.dart';
+
 //Components
 import '../../../widgets/comman/backbtn.dart';
 import 'img_edit.dart';
 import 'fields.dart';
 import '../../../widgets/comman/outlined_btn.dart';
+import '../../../widgets/auth/loaderwidget.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -17,11 +21,28 @@ class EditProfile extends StatefulWidget {
 class _EditProfileState extends State<EditProfile> {
   var screenWidth;
   var screenHeight;
-  bool keyboardIsOpen=false;
+  bool keyboardIsOpen = false;
 
   ColorPallete colorPallete = ColorPallete();
 
-  void updatePersonalInfo() {}
+  @override
+  void initState() {
+    super.initState();
+
+    Provider.of<StudentAuth>(context, listen: false)
+            .student_dob_controller
+            .text =
+        Provider.of<StudentAuth>(context, listen: false).studentData!.data.dob!;
+  }
+
+  void updatePersonalInfo() {
+    print("Data ${Provider.of<StudentAuth>(context, listen: false).studentData!.data.fname}");
+    print("Data ${Provider.of<StudentAuth>(context, listen: false).studentData!.data.lname}");
+    print("Data ${Provider.of<StudentAuth>(context, listen: false).studentData!.data.dob}");
+    print("Data ${Provider.of<StudentAuth>(context, listen: false).studentData!.data.gender}");
+    print("Data ${Provider.of<StudentAuth>(context, listen: false).studentData!.data.profileurl}");
+    Provider.of<StudentAuth>(context, listen: false).updateProfile(context);
+    }
 
   @override
   Widget build(BuildContext context) {
@@ -62,10 +83,13 @@ class _EditProfileState extends State<EditProfile> {
             ),
           ),
         ),
-        !keyboardIsOpen? Positioned(
-            bottom:20,
-            child:outlinedSubmitBtn(context, screenWidth,"Save Changes",updatePersonalInfo)
-        ):SizedBox(),
+        !keyboardIsOpen
+            ? Positioned(
+                bottom: 20,
+                child: outlinedSubmitBtn(
+                    context, screenWidth, "Save Changes", updatePersonalInfo))
+            : SizedBox(),
+        loaderWidgetAuth(context, screenWidth, screenHeight),
 
       ],
     )));
