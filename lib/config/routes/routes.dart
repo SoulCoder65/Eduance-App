@@ -20,7 +20,9 @@ class Routes {
   static String editprofile="/edit_profile";
   static String changepassword="/change_password";
   static String contactinfo="/contact_info";
-
+  static String quizhome="/quiz_home";
+  static String quizpage="/quiz_page";
+  static String quizresult="/quiz_result";
 
 
   static void configureRoutes(FluroRouter router) {
@@ -41,5 +43,9 @@ class Routes {
     router.define(editprofile, handler: profileEditHandler,transitionType: _transitionType);
     router.define(changepassword, handler: changePasswordHandler,transitionType: _transitionType);
     router.define(contactinfo, handler: contactInformationHandler,transitionType: _transitionType);
+  //  Quiz
+    router.define(quizhome, handler: quizHomeHandler,transitionType: _transitionType);
+    router.define(quizpage, handler: quizPageHandler,transitionType: _transitionType);
+    router.define(quizresult, handler: quizResultHandler,transitionType: _transitionType);
   }
 }

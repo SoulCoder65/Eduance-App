@@ -13,4 +13,8 @@ class ColorPallete{
   final errorColor=Colors.red;
   final widgetTextColor=Color(0xFF828384);
   final fieldColor=Color(0xFF121516);
+
+
+  final navyBgColor=Color(0xFFA4B9C5);
+  final greyishBgColor=Color(0xFF555E67);
 }

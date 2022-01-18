@@ -34,13 +34,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
   //Methods
   void signinFunction(BuildContext context) {
-    if (_formKey.currentState!.validate()) {
-      FocusManager.instance.primaryFocus!.unfocus();
-
-      print(Provider.of<StudentAuth>(context, listen: false).student_email);
-      print(Provider.of<StudentAuth>(context, listen: false).student_pass);
-      Provider.of<StudentAuth>(context, listen: false).signinStudent(context);
-    }
+    Navigator.pushNamed(context, "quiz_home");
+    // if (_formKey.currentState!.validate()) {
+    //   FocusManager.instance.primaryFocus!.unfocus();
+    //
+    //   print(Provider.of<StudentAuth>(context, listen: false).student_email);
+    //   print(Provider.of<StudentAuth>(context, listen: false).student_pass);
+    //   Provider.of<StudentAuth>(context, listen: false).signinStudent(context);
+    // }
   }
 
   @override

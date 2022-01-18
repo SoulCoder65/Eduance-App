@@ -25,8 +25,8 @@ class _StudentDashBoardState extends State<StudentDashBoard> {
     return SafeArea(child: Scaffold(
       key: scaffoldKey,
       backgroundColor: colorPallete.bgColor,
-      appBar: appBarWidget(context, scaffoldKey, appName),
-      drawer: drawerWidget(context, screenWidth),
+       appBar: appBarWidget(context, scaffoldKey, appName),
+       drawer: drawerWidget(context, screenWidth),
       body: Stack(
         children: [
           Container(

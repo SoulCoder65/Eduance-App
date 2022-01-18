@@ -36,6 +36,9 @@ dependencies:
   image_picker:
   cached_network_image: ^3.1.0+1
   flutter_secure_storage: ^4.2.1
+  circular_countdown: ^2.1.0
+  timer_controller: ^0.1.0
+  double_back_to_close: ^2.0.0
 
 
 
@@ -57,6 +60,7 @@ flutter:
     - assets/icons/
     - assets/animation/
     - assets/images/comman/
+    - assets/images/quiz/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

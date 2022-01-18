@@ -1,3 +1,4 @@
+
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 
@@ -24,6 +25,10 @@ import '../../screens/profile section/edit profile/edit_profile.dart';
 import '../../screens/profile section/password/change_password.dart';
 import '../../screens/profile section/contact/contactinfo.dart';
 
+//Quiz Section
+import '../../screens/quiz section/quiz_home.dart';
+import '../../screens/quiz section/quiz_page.dart';
+import '../../screens/quiz section/quiz_result.dart';
 // Root Handler
 var rootHandler=Handler(handlerFunc: (BuildContext? context,Map<String,List<String>> params){
   return SplashScreen();
@@ -69,3 +74,14 @@ var changePasswordHandler=Handler(handlerFunc:(BuildContext? context,Map<String,
 var contactInformationHandler=Handler(handlerFunc:(BuildContext? context,Map<String,List<String>> params){
   return ContactInfo();
 } );
+
+//<-------------Quiz Section----------------->
+var quizHomeHandler=Handler(handlerFunc: (BuildContext? context,Map<String,List<String>> params){
+  return QuizHome();
+});
+var quizPageHandler=Handler(handlerFunc: (BuildContext? context,Map<String,List<String>> params){
+  return QuizPage();
+});
+var quizResultHandler=Handler(handlerFunc: (BuildContext? context,Map<String,List<String>> params){
+  return QuizResult();
+});

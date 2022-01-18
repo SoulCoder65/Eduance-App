@@ -66,11 +66,11 @@ class StudentAuthDio {
         "email": email,
         "password": password,
       });
-      print("res ${res}");
+      print("res ${res.realUri}");
       return res;
     } on DioError catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();
-      print(errorMessage);
+      print(e.requestOptions.uri);
       showSnack(context, errorMessage);
     }
   }
