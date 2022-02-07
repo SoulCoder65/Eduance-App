@@ -29,6 +29,11 @@ import '../../screens/profile section/contact/contactinfo.dart';
 import '../../screens/quiz section/quiz_home.dart';
 import '../../screens/quiz section/quiz_page.dart';
 import '../../screens/quiz section/quiz_result.dart';
+
+
+//Blog Section
+import '../../screens/blog section/blog.dart';
+import '../../screens/blog section/blog_read_page.dart';
 // Root Handler
 var rootHandler=Handler(handlerFunc: (BuildContext? context,Map<String,List<String>> params){
   return SplashScreen();
@@ -84,4 +89,13 @@ var quizPageHandler=Handler(handlerFunc: (BuildContext? context,Map<String,List<
 });
 var quizResultHandler=Handler(handlerFunc: (BuildContext? context,Map<String,List<String>> params){
   return QuizResult();
+});
+
+
+//<---------------Blog Section------------------------->
+var blogHomeHandler=Handler(handlerFunc: (BuildContext? context,Map<String,List<String>> params){
+  return BlogHome();
+});
+var blogReadHandler=Handler(handlerFunc: (BuildContext? context,Map<String,List<String>> params){
+  return BlogReadPage();
 });

@@ -1,0 +1,56 @@
+[
+  {
+    "questions": [
+      {
+        "question_title":"Who developed the Python language?",
+        "question_options": [
+          "Zim Den",
+          "Guido van Rossum",
+          "Niene Stom",
+          "Wick van Rossum"
+        ],
+        "correct_option": 2
+      },
+      {
+        "question_title":"In which year was the Python language developed?",
+        "question_options": [
+          "1995",
+          "1972",
+          "1981",
+          "1989"
+        ],
+        "correct_option": 4
+      },
+      {
+        "question_title":"Which of the following declarations is incorrect?",
+        "question_options": [
+          "_x = 2",
+          "__x = 3",
+          "__xyz__ = 5",
+          "None of these"
+        ],
+        "correct_option": 4
+      },
+      {
+        "question_title":"Why does the name of local variables start with an underscore discouraged?",
+        "question_options": [
+          "To identify the variable",
+          "It confuses the interpreter",
+          "It indicates a private variable",
+          "None of these"
+        ],
+        "correct_option": 3
+      },
+      {
+        "question_title":"Which of the following is not a keyword in Python language?",
+        "question_options": [
+          "val",
+          "raise",
+          "try",
+          "with"
+        ],
+        "correct_option": 1
+      }
+    ]
+  }
+]

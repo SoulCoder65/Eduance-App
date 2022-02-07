@@ -23,7 +23,8 @@ class Routes {
   static String quizhome="/quiz_home";
   static String quizpage="/quiz_page";
   static String quizresult="/quiz_result";
-
+  static String bloghome="/blog_home";
+  static String blogread="/blog_read";
 
   static void configureRoutes(FluroRouter router) {
     router.notFoundHandler = Handler(
@@ -47,5 +48,9 @@ class Routes {
     router.define(quizhome, handler: quizHomeHandler,transitionType: _transitionType);
     router.define(quizpage, handler: quizPageHandler,transitionType: _transitionType);
     router.define(quizresult, handler: quizResultHandler,transitionType: _transitionType);
+
+    //<---------------Blog Section------------------>
+    router.define(bloghome, handler: blogHomeHandler,transitionType: _transitionType);
+    router.define(blogread, handler: blogReadHandler,transitionType: _transitionType);
   }
 }

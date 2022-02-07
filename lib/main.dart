@@ -13,6 +13,7 @@ import 'config/routes/routes_config.dart';
 
 //<----------Providers------------->
 import 'utils/state management/students/authentication.dart';
+import 'utils/state management/quiz/quiz.statemanagement.dart';
 
 //<----------Constants --------------->
 import 'utils/constants/colors.dart';
@@ -30,6 +31,7 @@ void main()async {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => StudentAuth()),
+      ChangeNotifierProvider(create: (_)=>QuizStateManagement()),
     ],
       builder: (context, child) {
         return MyApp();

@@ -2,18 +2,21 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:provider/provider.dart';
 //Helpers
 import '../../../utils/constants/colors.dart';
+//Statemanegement
+import '../../../utils/state management/quiz/quiz.statemanagement.dart';
 
 final colorpallete = ColorPallete();
-
 Widget quizCategoryCard(BuildContext context,double screenWidth,quizid,quiztitle,quizimg)
 {
   return InkWell(
     onTap: () {
-      Navigator.pushNamed(context, 'quiz_page');
-    },
+      Provider.of<QuizStateManagement>(context, listen: false)
+          .loadQuiz(context, "");
+
+       },
     child: Container(
       width: screenWidth*2.6,
 

@@ -1,16 +1,20 @@
 import 'package:auto_size_text/auto_size_text.dart';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:circular_countdown/circular_countdown.dart';
+import 'package:provider/provider.dart';
 import 'package:timer_controller/timer_controller.dart';
 import 'package:double_back_to_close/double_back_to_close.dart';
+import 'package:provider/provider.dart';
 //Helpers
 import '../../utils/constants/colors.dart';
 //Widgets
 import '../../widgets/comman/submitbtn.dart';
+
+//Statemanagement
+import '../../utils/state management/quiz/quiz.statemanagement.dart';
+
 class QuizPage extends StatefulWidget {
   @override
   _QuizPageState createState() => _QuizPageState();
@@ -19,26 +23,27 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage> {
   final colorpallete = ColorPallete();
 
-  late final TimerController _controller;
   @override
   void initState() {
     super.initState();
-    _controller = TimerController.seconds(30);
-    _controller.start();
-  }
+    // Provider.of<QuizStateManagement>(context,listen: false).setup();
+   }
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   Provider.of<QuizStateManagement>(context,listen: false).controller.dispose();
+  //   super.dispose();
+  // }
 
   //Next Question Function
-  void nextQuestion(BuildContext context)
-  {
-  //  To do
-    Navigator.pushNamed(context, '/quiz_result');
+  void nextQuestion(BuildContext context) {
+    //  To do
+    Provider.of<QuizStateManagement>(context, listen: false)
+        .updateQuiz(context);
+    Provider.of<QuizStateManagement>(context,listen: false).controller.restart();
+    //   Navigator.pushNamed(context, '/quiz_result');
   }
+
   var screenWidth;
   var screenHeight;
   ColorPallete colorPallete = ColorPallete();
@@ -66,7 +71,9 @@ class _QuizPageState extends State<QuizPage> {
                 height: 20,
               ),
               _quizHead(),
-              SizedBox(height: 15,),
+              SizedBox(
+                height: 15,
+              ),
               _quizNumber(),
               SizedBox(
                 height: 15,
@@ -80,11 +87,27 @@ class _QuizPageState extends State<QuizPage> {
               SizedBox(
                 height: 20,
               ),
-              _quizOptionWidget(),
-              _quizOptionWidget(),
-              _quizOptionWidget(),
-              _quizOptionWidget(),
-              SizedBox(height: 20,),
+              Consumer<QuizStateManagement>(
+                builder: (context, value, child) {
+                  return Column(
+                    children: [
+                      for (int i = 0;
+                          i <
+                              value.quizModel.questions![value.currentIndex]
+                                  .questionOptions!.length;
+                          i++)
+                        _quizOptionWidget(
+                            value.quizModel.questions![value.currentIndex]
+                                .questionOptions![i],
+                            i + 1,
+                            value.optionStatus)
+                    ],
+                  );
+                },
+              ),
+              SizedBox(
+                height: 20,
+              ),
               _exitButtons()
             ],
           ),
@@ -133,12 +156,16 @@ class _QuizPageState extends State<QuizPage> {
 //  Quiz CountDown Widget
   Widget _quizCountDownWidget() {
     return TimerControllerListener(
-        controller: _controller,
+        controller: Provider.of<QuizStateManagement>(context,listen: false).controller,
         listenWhen: (previous, current) => previous.status != current.status,
-        listener: (context, timerValue) {},
+        listener: (context, timerValue) {
+          if (timerValue.status == TimerStatus.finished) {
+            nextQuestion(context);
+          }
+        },
         child: Center(
             child: TimerControllerBuilder(
-          controller: _controller,
+          controller: Provider.of<QuizStateManagement>(context,listen: false).controller,
           builder: (context, timerValue, child) {
             Color? timerColor;
             switch (timerValue.status) {
@@ -155,7 +182,7 @@ class _QuizPageState extends State<QuizPage> {
             }
             return CircularCountdown(
               diameter: 100,
-              countdownTotal: _controller.initialValue.remaining,
+              countdownTotal: Provider.of<QuizStateManagement>(context,listen: false).controller.initialValue.remaining,
               countdownRemaining: timerValue.remaining,
               countdownCurrentColor: timerColor,
               countdownRemainingColor: const Color(0xFF4F6367),
@@ -173,62 +200,180 @@ class _QuizPageState extends State<QuizPage> {
   Widget _quizCurrenQuestion() {
     return Container(
       width: screenWidth,
-      child: AutoSizeText(
-        "The Open Trivia Database provides a completely free JSON API for use in programming projects. Use of this API does not require a API Key",
-        maxLines: 10,
-        style: GoogleFonts.montserrat(
-            fontSize: 15, fontWeight: FontWeight.w400, height: 1.7),
+      child: Consumer<QuizStateManagement>(
+        builder: (context, value, child) {
+          return AutoSizeText(
+            value.quizModel.questions![value.currentIndex].questionTitle,
+            maxLines: 10,
+            style: GoogleFonts.montserrat(
+                fontSize: 15, fontWeight: FontWeight.w400, height: 1.7),
+          );
+        },
       ),
     );
   }
 
 //  Quiz Option Widget
-  Widget _quizOptionWidget() {
-    return GestureDetector(
-      onTap: () {},
-      child: Align(
-        alignment: Alignment.center,
-        child: Container(
-          padding: const EdgeInsets.all(15),
-          margin: const EdgeInsets.only(top: 20),
-          width: screenWidth * 0.9,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              AutoSizeText(
-                "Male",
-                style: GoogleFonts.montserrat(
-                    color: colorpallete.primaryText,
-                    fontWeight: FontWeight.w500),
+  Widget _quizOptionWidget(
+      String question, int option, Map<String, int> optionStatus) {
+    return Consumer<QuizStateManagement>(
+      builder: (context, value, child) {
+        return GestureDetector(
+          onTap: value.clickable
+              ? () {
+                  value.checkAndUpdateScore(context, option);
+                }
+              : null,
+          child: Align(
+            alignment: Alignment.center,
+            child: Container(
+              padding: const EdgeInsets.all(15),
+              margin: const EdgeInsets.only(top: 20),
+              width: screenWidth * 0.9,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  AutoSizeText(
+                    question,
+                    style: GoogleFonts.montserrat(
+                        color: colorpallete.primaryText,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  optionStatus[option.toString()] == 1
+                      ? Icon(Feather.check_circle, color: Colors.green)
+                      : optionStatus[option.toString()] == 2
+                          ? Icon(
+                              Icons.crop,
+                              color: Colors.red,
+                            )
+                          : Icon(
+                              Icons.circle,
+                              color: colorpallete.btnTextColor,
+                            ),
+                ],
               ),
-              false
-                  ? Icon(Feather.check_circle, color: Colors.green)
-                  : Icon(
-                      Icons.circle,
-                      color: colorpallete.btnTextColor,
-                    ),
-            ],
+              decoration: BoxDecoration(
+                  color: Color(0xFF121516),
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(
+                      color: optionStatus[option.toString()] == 1
+                          ? Colors.green
+                          : optionStatus[option.toString()] == 2
+                              ? Colors.red
+                              : Colors.grey,
+                      width: 1)),
+            ),
           ),
-          decoration: BoxDecoration(
-              color: Color(0xFF121516),
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(
-                  color: false ? Colors.green : Colors.grey, width: 1)),
-        ),
+        );
+      },
+    );
+  }
+
+//Buttons
+  Widget _exitButtons() {
+    return Container(
+      width: screenWidth,
+      child: Row(
+        children: [
+          submitBtn(context, screenWidth, "Next", nextQuestion),
+        ],
       ),
     );
   }
-//Buttons
-Widget _exitButtons()
-{
-  return Container(
-    width: screenWidth,
-    child: Row(
-      children: [
-        submitBtn(context, screenWidth, "Next", nextQuestion),
-      ],
-    ),
-  );
 }
-
-}
+//
+// [
+// {
+// "questions": [
+// {
+// "question_title":"",
+// "question_options": [
+// "",
+// "",
+// "",
+// ""
+// ],
+// "correct_option": ""
+// },
+// {
+// "question_title":"",
+// "question_options": [
+// "",
+// "",
+// "",
+// ""
+// ],
+// "correct_option": ""
+// },
+// {
+// "question_title":"",
+// "question_options": [
+// "",
+// "",
+// "",
+// ""
+// ],
+// "correct_option": ""
+// },
+// {
+// "question_title":"",
+// "question_options": [
+// "",
+// "",
+// "",
+// ""
+// ],
+// "correct_option": ""
+// },
+// {
+// "question_title":"",
+// "question_options": [
+// "",
+// "",
+// "",
+// ""
+// ],
+// "correct_option": ""
+// },
+// {
+// "question_title":"",
+// "question_options": [
+// "",
+// "",
+// "",
+// ""
+// ],
+// "correct_option": ""
+// },{
+// "question_title":"",
+// "question_options": [
+// "",
+// "",
+// "",
+// ""
+// ],
+// "correct_option": ""
+// },
+// {
+// "question_title":"",
+// "question_options": [
+// "",
+// "",
+// "",
+// ""
+// ],
+// "correct_option": ""
+// },{
+// "question_title":"",
+// "question_options": [
+// "",
+// "",
+// "",
+// ""
+// ],
+// "correct_option": ""
+// }
+//
+// ]
+// }
+// ]

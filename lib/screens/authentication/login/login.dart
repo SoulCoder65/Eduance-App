@@ -34,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   //Methods
   void signinFunction(BuildContext context) {
-    Navigator.pushNamed(context, "quiz_home");
+    Navigator.pushNamed(context, "blog_home");
     // if (_formKey.currentState!.validate()) {
     //   FocusManager.instance.primaryFocus!.unfocus();
     //
